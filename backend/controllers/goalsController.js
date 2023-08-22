@@ -49,7 +49,6 @@ const DeleteGoal = asyncHandler(async (req, res, next) => {
   }
 
   const deletedGoad = await Goal.findOneAndDelete({_id: req.params.id });
-  res.send(post);
   res.status(200).json(deletedGoad);
 });
 
