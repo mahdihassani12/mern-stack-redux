@@ -30,7 +30,12 @@ const registerUser = asyncHandler(async (req, res, next) => {
   });
 
   if (user) {
-    res.status(200).json(user);
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+    });
   } else {
     res.status(400);
     throw new Error("Invalid user data.");
@@ -47,7 +52,12 @@ const loginUser = asyncHandler(async (req, res, next) => {
   // check for matching password
   const checkPassword = await bcrypt.compare(password, user.password);
   if (user && checkPassword) {
-    res.status(200).json(user);
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+    });
   } else {
     res.status(400);
     throw new Error("Invalid user data.");
@@ -55,6 +65,21 @@ const loginUser = asyncHandler(async (req, res, next) => {
 });
 
 // authenticate a user on validation
-const getMe = asyncHandler(async (req, res, next) => {});
+const getMe = asyncHandler(async (req, res, next) => {
+    const {_id, name, email} = await User.findById(req.user.id);
+
+    res.status(200).json({
+        id: _id,
+        name,
+        email
+    })
+});
+
+// Generate jwt
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+};
 
 export { registerUser, loginUser, getMe };
