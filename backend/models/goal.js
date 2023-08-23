@@ -4,7 +4,7 @@ const goalSchema = mongoose.Schema(
   {
     text: {
       type: String,
-      required: ["Please add a text value"],
+      required: [true, "Please add a text value"],
     },
   },
   {
