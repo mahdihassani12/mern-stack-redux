@@ -7,11 +7,12 @@ import {
   updateGoal,
   DeleteGoal,
 } from "../controllers/goalsController.js";
+import { protect } from '../middlewares/auth.js';
 
-router.get("/", getGoals);
-router.get("/:id", getGoalById);
-router.post("/", createGoal);
-router.put("/:id", updateGoal);
-router.delete("/:id", DeleteGoal);
+router.get("/", protect, getGoals);
+router.get("/:id", protect, getGoalById);
+router.post("/", protect, createGoal);
+router.put("/:id", protect, updateGoal);
+router.delete("/:id", protect, DeleteGoal);
 
 export default router;
