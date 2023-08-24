@@ -1,8 +1,24 @@
-# mern-stack-redux
+# Goalsetter MERN app
 
-# npm i
-# npm run server
+This is the goalsetter app.
 
-## server has been completed.
-## you can check out models, controllers and routes.
-## the routes are ready for use.
+## Usage
+
+Rename the .envexample to .env and add your MONGO_URI
+
+### Install dependencies
+
+```
+# Backend deps
+npm install
+
+# Frontend deps
+cd frontend
+npm install
+```
+
+### Run Server
+
+```
+npm run server
+```
