@@ -1,10 +1,15 @@
-import React from 'react';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Header from "./components/Header";
 
 function App() {
   return (
-    <div>
-        <h1>Hello world</h1>
-    </div>
+    <>
+      <div className="container">
+        <Header />
+        <Outlet />
+      </div>
+    </>
   );
 }
 
