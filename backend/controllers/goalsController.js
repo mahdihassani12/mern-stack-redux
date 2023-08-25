@@ -38,13 +38,12 @@ const updateGoal = asyncHandler(async (req, res, next) => {
     throw new Error("Resource not found");
   }
 
-  const user = await User.findById(req.user.id);
-  if (!user) {
+  if (!req.user) {
     res.status(401);
     throw new Error("User not found");
   }
 
-  if (goal.user.toString() !== user.id) {
+  if (goal.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("User not authorized");
   }
@@ -59,24 +58,24 @@ const updateGoal = asyncHandler(async (req, res, next) => {
 // deleting goals
 const DeleteGoal = asyncHandler(async (req, res, next) => {
   const goal = await Goal.findById(req.params.id);
+
   if (!goal) {
     res.status(404);
     throw new Error("Resource not found");
   }
 
-  const user = await User.findById(req.user.id);
-  if (!user) {
+  if (!req.user) {
     res.status(401);
     throw new Error("User not found");
   }
 
-  if (goal.user.toString() !== user.id) {
+  if (goal.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("User not authorized");
   }
 
-  const deletedGoad = await Goal.findOneAndDelete({ _id: req.params.id });
-  res.status(200).json({message: `Resource has been deleted`});
+  await Goal.findOneAndDelete({ _id: req.params.id });
+  res.status(200).json({ message: `Resource has been deleted` });
 });
 
 export { getGoals, createGoal, updateGoal, DeleteGoal, getGoalById };
